@@ -12,6 +12,7 @@ export default function User(props) {
     const [loading, setLoading] = useState(true);
     const [dataUser, setDataUser] = useState([]);
     const [isShowAdd, setIsShowAdd] = useState(false);
+    const [userDetail, setUserDetail] = useState(null);
 
     useEffect(() => {
         _loadUser();
@@ -33,6 +34,7 @@ export default function User(props) {
     function _handleAction(item, action) {
         if (action === ACTION_ITEM.EDIT) {
             setIsShowAdd(!isShowAdd)
+            setUserDetail(item)
         } else if (action === ACTION_ITEM.DELETE) {
             setLoading(true)
             const body = { userId: item._id }
@@ -62,7 +64,7 @@ export default function User(props) {
             </div>
             <div className={classes.wrapForm}>
                 {isShowAdd ? (
-                    <UserAdd onClose={() => _onCloseUserAdd()} />
+                    <UserAdd detail={userDetail} onClose={() => _onCloseUserAdd()} />
                 ) : (
                     <Button
                         variant={"contained"}

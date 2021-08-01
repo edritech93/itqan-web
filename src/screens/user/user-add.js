@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import { Button, TextField, Card } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles';
 import { API } from '../../helpers/api';
@@ -15,10 +15,19 @@ const useStyles = makeStyles({
 });
 
 export default function UserAdd(props) {
+    const {detail} = props;
     const classes = useStyles();
     const [fullName, setFullName] = useState(null);
     const [address, setAddress] = useState(null);
     const [phoneNumber, setPhoneNumber] = useState(null);
+
+    useEffect(() => {
+        if (detail) {
+            setFullName(detail.fullName)
+            setAddress(detail.address)
+            setPhoneNumber(detail.phoneNumber)
+        }
+    }, [detail])
 
     const handleAdd = () => {
         const body ={fullName, address, phoneNumber}
@@ -36,6 +45,7 @@ export default function UserAdd(props) {
                 id="fullName"
                 label="Nama Lengkap"
                 variant="outlined"
+                value={fullName}
                 className={classes.form}
                 onChange={(event) => setFullName(event.target.value)}
             />
@@ -43,6 +53,7 @@ export default function UserAdd(props) {
                 id="address"
                 label="Alamat"
                 variant="outlined"
+                value={address}
                 className={classes.form}
                 onChange={(event) => setAddress(event.target.value)}
             />
@@ -50,6 +61,7 @@ export default function UserAdd(props) {
                 id="phoneNumber"
                 label="Nomor. Hp"
                 variant="outlined"
+                value={phoneNumber}
                 className={classes.form}
                 onChange={(event) => setPhoneNumber(event.target.value)}
             />
