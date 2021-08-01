@@ -1,11 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import ItemUser from './item-user';
-import { Button, TextField } from '@material-ui/core'
+import { Button } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles';
 import { API } from '../../helpers/api';
 import UserAdd from './user-add';
 
 const useStyles = makeStyles({
+    container: {
+        display: 'flex',
+        flex: 1,
+        padding: 16
+    },
+    list: {
+        display: 'flex',
+        flex: 1,
+        flexDirection: 'column',
+        marginRight: 16,
+    },
     form: {
         marginBottom: 16,
     }
@@ -29,22 +40,31 @@ export default function User(props) {
             .finally(() => setLoading(false))
     }
 
+    function _onCloseUserAdd() {
+        _loadUser();
+        setIsShowAdd(!isShowAdd)
+    }
+
     return (
-        <div className="container">
-            {isShowAdd ? (
-                <UserAdd onClose={() => setIsShowAdd(!isShowAdd)}/>
-            ) : (
-                <Button
-                    variant={"contained"}
-                    color={"primary"}
-                    className={classes.form}
-                    onClick={() => setIsShowAdd(!isShowAdd)}>
-                    Tambah
-                </Button>
-            )}
-            {dataUser.map((item) => {
-                return <ItemUser item={item} />
-            })}
+        <div className={classes.container}>
+            <div className={classes.list}>
+                {dataUser.map((item) => {
+                    return <ItemUser item={item} />
+                })}
+            </div>
+            <div>
+                {isShowAdd ? (
+                    <UserAdd onClose={() => _onCloseUserAdd()} />
+                ) : (
+                    <Button
+                        variant={"contained"}
+                        color={"primary"}
+                        className={classes.form}
+                        onClick={() => setIsShowAdd(!isShowAdd)}>
+                        Tambah
+                    </Button>
+                )}
+            </div>
         </div>
     );
 }
