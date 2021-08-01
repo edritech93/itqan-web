@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import { showAlert } from '../actions/app';
-import Screen from '../screens/auth/login'; 
+import Screen from '../screens/transaction'; 
 
 const mapStateToProps = (state, ownProps) => {
     return {  }

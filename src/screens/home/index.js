@@ -8,7 +8,7 @@ export default function Home(props) {
     }
 
     const handleTransaction = () => {
-
+        props.history.push('/transaction');
     }
 
     const handleReport = () => {

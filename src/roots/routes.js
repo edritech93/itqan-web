@@ -1,16 +1,16 @@
 import React from 'react';
-import { Switch, Route, } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 import { PrivateRoute } from '../helpers/private-route';
-import Login from '../screens/auth/login';
-import Home from '../screens/home';
+import Login from '../containers/login';
+import Home from '../containers/home';
+import Transaction from '../containers/transaction';
 
 export default function Routes() {
     return (
         <Switch>
             <Route path="/" exact component={Login} />
             <PrivateRoute path="/home" component={Home} isPrivate />
-            {/* redirect user to SignIn page if route does not exist and user is not authenticated */}
-            <Route component={Login} />
+            <PrivateRoute path="/transaction" component={Transaction} isPrivate />
         </Switch>
     );
 }
