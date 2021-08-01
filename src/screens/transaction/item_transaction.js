@@ -1,7 +1,7 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Typography, Card, Button } from '@material-ui/core';
-import { ACTION_ITEM } from '../../constants';
+import { ACTION_ITEM, TYPE_TRANSACTION } from '../../constants';
 
 export default function ItemTransaction(props) {
     const { item, onPress } = props;
@@ -11,13 +11,13 @@ export default function ItemTransaction(props) {
         <Card className={classes.container}>
             <div className={classes.wrapColumn}>
                 <Typography variant="h5">
-                    {item.fullName}
+                    {item.amount}
                 </Typography>
                 <Typography variant="h8">
-                    {item.address}
+                    {item.createdDate}
                 </Typography>
                 <Typography variant="h8">
-                    {item.phoneNumber}
+                    {TYPE_TRANSACTION[item.transactionType].text}
                 </Typography>
             </div>
             <div>

@@ -118,10 +118,11 @@ export class Api {
     });
   }
 
-  async transactionGet() {
+  async transactionGet(args) {
     return this._request({
       method: 'get',
       url: 'v1/transaction',
+      params: args
     });
   }
 

@@ -1,48 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { Button, TextField, Card } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles';
+import { TYPE_TRANSACTION } from '../../constants';
 import { FormPicker } from '../../components';
 import { API } from '../../helpers/api';
 
-const TYPE_TRANSACTION = [
-    {
-        id: 0,
-        text: 'Setoran'
-    },
-    {
-        id: 1,
-        text: 'Penarikan'
-    },
-]
-
 export default function TransactionAdd(props) {
     const classes = useStyles();
+    const {userId} = props;
+
     const [loading, setLoading] = useState(false);
-    const [dataUser, setDataUser] = useState([]);
-    const [userId, setUserId] = useState(null);
     const [transactionType, setTransactionType] = useState(null);
     const [amount, setAmount] = useState(null);
     const [remark, setRemark] = useState(null);
-
-    useEffect(() => {
-        _loadUser();
-    }, [])
-
-    function _loadUser() {
-        setLoading(true)
-        API.singleRequest(API.userGet())
-            .then(response => {
-                const arrayUser = response.data.map((item) => {
-                    return ({
-                        id: item._id,
-                        text: item.fullName
-                    })
-                })
-                setDataUser(arrayUser)
-            })
-            .catch(error => props.showAlert(error))
-            .finally(() => setLoading(false))
-    }
 
     const handleAdd = () => {
         if (userId && amount) {
@@ -67,13 +37,6 @@ export default function TransactionAdd(props) {
 
     return (
         <Card className={classes.card}>
-            <FormPicker
-                title={'User'}
-                value={userId}
-                data={dataUser}
-                className={classes.form}
-                onChange={(value) => setUserId(value)}
-            />
             <FormPicker
                 title={'Type'}
                 value={transactionType}
