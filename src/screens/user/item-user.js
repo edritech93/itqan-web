@@ -25,13 +25,13 @@ export default function ItemUser(props) {
                     variant={"contained"}
                     color={"primary"}
                     className={classes.btnEdit}
-                    onClick={() => onPress(ACTION_ITEM.EDIT)}>
+                    onClick={() => onPress(item, ACTION_ITEM.EDIT)}>
                     Ubah
                 </Button>
                 <Button
                     variant={"contained"}
                     color={"secondary"}
-                    onClick={() => onPress(ACTION_ITEM.DELETE)}>
+                    onClick={() => onPress(item, ACTION_ITEM.DELETE)}>
                     Hapus
                 </Button>
             </div>

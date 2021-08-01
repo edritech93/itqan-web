@@ -1,11 +1,5 @@
 import { put, takeEvery, } from 'redux-saga/effects';
-import {
-    ALERT,
-} from '../actions/types';
-
-/**
- *  SET ALERT
- */
+import {ALERT} from '../actions/types';
 
 export function* showAlert(action) {
     const alert = action.alert;
@@ -16,9 +10,6 @@ export function* alertWatcher() {
     yield takeEvery(ALERT.SHOW, showAlert);
 }
 
-/**
- *  CLEAR ALERT
- */
 export function* removeAlert(action) {
     yield put({ type: ALERT.SET, alert: null });
 }

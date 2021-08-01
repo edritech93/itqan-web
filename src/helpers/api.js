@@ -91,8 +91,7 @@ export class Api {
     return this._request({
       method: 'get',
       url: 'v1/user',
-    }
-    );
+    });
   }
 
   async userAdd(args) {
@@ -100,8 +99,15 @@ export class Api {
       method: 'post',
       url: 'v1/user',
       data: args,
-    }
-    );
+    });
+  }
+
+  async userDelete(args) {
+    return this._request({
+      method: 'delete',
+      url: 'v1/user',
+      data: args,
+    });
   }
 }
 

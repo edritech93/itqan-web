@@ -30,17 +30,17 @@ export default function User(props) {
         setIsShowAdd(!isShowAdd)
     }
 
-    function _handleAction(action)  {
-        if (action === ACTION_ITEM.EDIT)    {
+    function _handleAction(item, action) {
+        if (action === ACTION_ITEM.EDIT) {
+            setIsShowAdd(!isShowAdd)
+        } else if (action === ACTION_ITEM.DELETE) {
             setLoading(true)
-            API.singleRequest(API.userGet())
-                .then(response => setDataUser(response.data))
-                .catch(error => props.showAlert(error))
-                .finally(() => setLoading(false))
-        } else if (action === ACTION_ITEM.DELETE)   {
-            setLoading(true)
-            API.singleRequest(API.userGet())
-                .then(response => setDataUser(response.data))
+            const body = { userId: item._id }
+            API.singleRequest(API.userDelete(body))
+                .then(response => {
+                    props.showAlert(response.data)
+                    _loadUser()
+                })
                 .catch(error => props.showAlert(error))
                 .finally(() => setLoading(false))
         }
@@ -49,8 +49,14 @@ export default function User(props) {
     return (
         <div className={classes.container}>
             <div className={classes.wrapList}>
-                {dataUser.map((item) => {
-                    return <ItemUser item={item} onPress={(action) => _handleAction(action)} />
+                {dataUser.map((item, index) => {
+                    return (
+                        <ItemUser
+                            item={item}
+                            key={index}
+                            onPress={(item, action) => _handleAction(item, action)}
+                        />
+                    )
                 })}
                 <Loader visible={loading} />
             </div>
