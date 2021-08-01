@@ -1,9 +1,9 @@
 import { connect } from 'react-redux';
 import { showAlert } from '../actions/app';
-import Screen from '../screens/transaction'; 
+import Screen from '../screens/report'; 
 
 const mapStateToProps = (state, ownProps) => {
-    return { }
+    return {}
 }
 
 const mapDispatchToProps = (dispatch) => {
