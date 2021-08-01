@@ -28,12 +28,13 @@ export default function User(props) {
 
     function _onCloseUserAdd() {
         _loadUser();
-        setIsShowAdd(!isShowAdd)
+        setIsShowAdd(false)
+        setUserDetail(null)
     }
 
     function _handleAction(item, action) {
         if (action === ACTION_ITEM.EDIT) {
-            setIsShowAdd(!isShowAdd)
+            setIsShowAdd(true)
             setUserDetail(item)
         } else if (action === ACTION_ITEM.DELETE) {
             setLoading(true)
@@ -69,7 +70,7 @@ export default function User(props) {
                     <Button
                         variant={"contained"}
                         color={"primary"}
-                        onClick={() => setIsShowAdd(!isShowAdd)}>
+                        onClick={() => setIsShowAdd(true)}>
                         Tambah
                     </Button>
                 )}
