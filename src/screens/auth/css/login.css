@@ -1,0 +1,22 @@
+.container {
+  flex: 1;
+  display: flex;
+  height: 100vh;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.form {
+  display: flex;
+  width: 300px;
+  height: 300px;
+  flex-direction: column;
+  justify-content: center;
+  background-color: rgb(166, 255, 0);
+  padding: 16px;
+}
+
+.margin-bottom {
+  margin-bottom: 16px;
+}
