@@ -25,7 +25,7 @@ export default function Home(props) {
     }
 
     return (
-        <div className="container">
+        <div className="container-center">
             <Button
                 variant={"contained"}
                 color={"primary"}

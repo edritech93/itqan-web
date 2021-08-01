@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import ItemUser from './item-user';
-import { Button } from '@material-ui/core'
+import { Button, TextField } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles';
 import { API } from '../../helpers/api';
+import UserAdd from './user-add';
 
 const useStyles = makeStyles({
     form: {
@@ -14,6 +15,7 @@ export default function User(props) {
     const classes = useStyles();
     const [loading, setLoading] = useState(false);
     const [dataUser, setDataUser] = useState([]);
+    const [isShowAdd, setIsShowAdd] = useState(false);
 
     useEffect(() => {
         _loadUser();
@@ -27,19 +29,19 @@ export default function User(props) {
             .finally(() => setLoading(false))
     }
 
-    const handleAdd  = () => {
-
-    }
-
     return (
         <div className="container">
-            <Button
-                variant={"contained"}
-                color={"primary"}
-                className={classes.form}
-                onClick={handleAdd}>
-                Tambah
-            </Button>
+            {isShowAdd ? (
+                <UserAdd onClose={() => setIsShowAdd(!isShowAdd)}/>
+            ) : (
+                <Button
+                    variant={"contained"}
+                    color={"primary"}
+                    className={classes.form}
+                    onClick={() => setIsShowAdd(!isShowAdd)}>
+                    Tambah
+                </Button>
+            )}
             {dataUser.map((item) => {
                 return <ItemUser item={item} />
             })}
