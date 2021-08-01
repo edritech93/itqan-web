@@ -3,6 +3,10 @@ import axios from 'axios';
 const CancelToken = axios.CancelToken;
 
 let terminateAPI = null;
+const CONTENT_TYPE = {
+  FORM_DATA: 'form-data',
+  URLENCODED: 'urlencoded',
+};
 
 export class Api {
   async _request(request) {

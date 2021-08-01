@@ -25,7 +25,7 @@ export default function Login(props) {
   }
 
   return (
-    <div className="container">
+    <div className="container-center">
       <Card className="form">
         <h1>Login</h1>
         <TextField
