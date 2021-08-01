@@ -10,39 +10,34 @@ import TransactionAdd from './transaction_add';
 export default function Transaction(props) {
     const classes = useStyles();
     const [loading, setLoading] = useState(true);
-    const [dataUser, setDataUser] = useState([]);
+    const [dataTransaction, setDataTransaction] = useState([]);
     const [isShowAdd, setIsShowAdd] = useState(false);
-    const [userDetail, setUserDetail] = useState(null);
 
     useEffect(() => {
-        _loadUser();
+        _loadTransaction();
     }, [])
 
-    function _loadUser() {
+    function _loadTransaction() {
         setLoading(true)
-        API.singleRequest(API.userGet())
-            .then(response => setDataUser(response.data))
+        API.singleRequest(API.transactionGet())
+            .then(response => setDataTransaction(response.data))
             .catch(error => props.showAlert(error))
             .finally(() => setLoading(false))
     }
 
     function _onCloseUserAdd() {
-        _loadUser();
+        _loadTransaction();
         setIsShowAdd(false)
-        setUserDetail(null)
     }
 
     function _handleAction(item, action) {
-        if (action === ACTION_ITEM.EDIT) {
-            setIsShowAdd(true)
-            setUserDetail(item)
-        } else if (action === ACTION_ITEM.DELETE) {
+        if (action === ACTION_ITEM.DELETE) {
             setLoading(true)
             const body = { userId: item._id }
             API.singleRequest(API.userDelete(body))
                 .then(response => {
                     props.showAlert(response.data)
-                    _loadUser()
+                    _loadTransaction()
                 })
                 .catch(error => props.showAlert(error))
                 .finally(() => setLoading(false))
@@ -52,7 +47,7 @@ export default function Transaction(props) {
     return (
         <div className={classes.container}>
             <div className={classes.wrapList}>
-                {dataUser.map((item, index) => {
+                {dataTransaction.map((item, index) => {
                     return (
                         <ItemTransaction
                             item={item}
@@ -65,7 +60,7 @@ export default function Transaction(props) {
             </div>
             <div className={classes.wrapForm}>
                 {isShowAdd ? (
-                    <TransactionAdd detail={userDetail} onClose={() => _onCloseUserAdd()} />
+                    <TransactionAdd onClose={() => _onCloseUserAdd()} showAlert={props.showAlert} />
                 ) : (
                     <Button
                         variant={"contained"}

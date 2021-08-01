@@ -1,69 +1,101 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button, TextField, Card } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles';
+import { FormPicker } from '../../components';
 import { API } from '../../helpers/api';
 
-const useStyles = makeStyles({
-    form: {
-        marginBottom: 16,
+const TYPE_TRANSACTION = [
+    {
+        id: 0,
+        text: 'Setoran'
     },
-    card: {
-        display: 'flex',
-        flexDirection: 'column',
-        padding: 16
-    }
-});
+    {
+        id: 1,
+        text: 'Penarikan'
+    },
+]
 
 export default function TransactionAdd(props) {
-    const {detail} = props;
     const classes = useStyles();
-    const [fullName, setFullName] = useState(null);
-    const [address, setAddress] = useState(null);
-    const [phoneNumber, setPhoneNumber] = useState(null);
+    const [loading, setLoading] = useState(false);
+    const [dataUser, setDataUser] = useState([]);
+    const [userId, setUserId] = useState(null);
+    const [transactionType, setTransactionType] = useState(null);
+    const [amount, setAmount] = useState(null);
+    const [remark, setRemark] = useState(null);
 
     useEffect(() => {
-        if (detail) {
-            setFullName(detail.fullName)
-            setAddress(detail.address)
-            setPhoneNumber(detail.phoneNumber)
-        }
-    }, [detail])
+        _loadUser();
+    }, [])
+
+    function _loadUser() {
+        setLoading(true)
+        API.singleRequest(API.userGet())
+            .then(response => {
+                const arrayUser = response.data.map((item) => {
+                    return ({
+                        id: item._id,
+                        text: item.fullName
+                    })
+                })
+                setDataUser(arrayUser)
+            })
+            .catch(error => props.showAlert(error))
+            .finally(() => setLoading(false))
+    }
 
     const handleAdd = () => {
-        const body ={fullName, address, phoneNumber}
-        API.singleRequest(API.userAdd(body))
-        .then(response => {
-            alert(response.data.message)
-            props.onClose()
-        })
-        .catch(error => {})
+        if (userId && amount) {
+            setLoading(true)
+            const body = {
+                userId: userId,
+                transactionType: transactionType,
+                amount: amount,
+                remark: remark,
+            }
+            API.singleRequest(API.transactionAdd(body))
+                .then(response => {
+                    alert(response.data.message)
+                    props.onClose()
+                })
+                .catch(error => props.showAlert(error))
+                .finally(() => setLoading(false))
+        } else {
+            alert('Isi data dengan benar')
+        }
     }
 
     return (
         <Card className={classes.card}>
-            <TextField
-                id="fullName"
-                label="Nama Lengkap"
-                variant="outlined"
-                value={fullName}
+            <FormPicker
+                title={'User'}
+                value={userId}
+                data={dataUser}
                 className={classes.form}
-                onChange={(event) => setFullName(event.target.value)}
+                onChange={(value) => setUserId(value)}
+            />
+            <FormPicker
+                title={'Type'}
+                value={transactionType}
+                data={TYPE_TRANSACTION}
+                className={classes.form}
+                onChange={(value) => setTransactionType(value)}
             />
             <TextField
-                id="address"
-                label="Alamat"
+                id="amount"
+                label="Jumlah"
                 variant="outlined"
-                value={address}
+                value={amount}
                 className={classes.form}
-                onChange={(event) => setAddress(event.target.value)}
+                onChange={(event) => setAmount(event.target.value)}
             />
             <TextField
-                id="phoneNumber"
-                label="Nomor. Hp"
+                id="remark"
+                label="Keterangan"
                 variant="outlined"
-                value={phoneNumber}
+                value={remark}
                 className={classes.form}
-                onChange={(event) => setPhoneNumber(event.target.value)}
+                onChange={(event) => setRemark(event.target.value)}
             />
             <Button
                 variant={"contained"}
@@ -81,3 +113,14 @@ export default function TransactionAdd(props) {
         </Card>
     )
 }
+
+const useStyles = makeStyles({
+    form: {
+        marginBottom: 16,
+    },
+    card: {
+        display: 'flex',
+        flexDirection: 'column',
+        padding: 16
+    }
+});

@@ -102,10 +102,33 @@ export class Api {
     });
   }
 
+  async userEdit(args) {
+    return this._request({
+      method: 'put',
+      url: 'v1/user',
+      data: args,
+    });
+  }
+
   async userDelete(args) {
     return this._request({
       method: 'delete',
       url: 'v1/user',
+      data: args,
+    });
+  }
+
+  async transactionGet() {
+    return this._request({
+      method: 'get',
+      url: 'v1/transaction',
+    });
+  }
+
+  async transactionAdd(args) {
+    return this._request({
+      method: 'post',
+      url: 'v1/transaction',
       data: args,
     });
   }
