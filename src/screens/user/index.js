@@ -4,8 +4,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import { ACTION_ITEM } from '../../constants';
 import { Loader } from '../../components';
 import { API } from '../../helpers/api';
-import ItemUser from './item-user';
-import UserAdd from './user-add';
+import ItemUser from './item_user';
+import UserAdd from './user_add';
 
 export default function User(props) {
     const classes = useStyles();
