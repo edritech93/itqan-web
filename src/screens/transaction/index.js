@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Button } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import { ACTION_ITEM } from '../../constants';
 import { Loader, FormPicker } from '../../components';
 import { API } from '../../helpers/api';
-import ItemTransaction from './item_transaction';
+import TableTransaction from './table_transaction';
 import TransactionAdd from './transaction_add';
 
 export default function Transaction(props) {
@@ -59,20 +58,6 @@ export default function Transaction(props) {
         setIsShowAdd(false)
     }
 
-    function _handleAction(item, action) {
-        if (action === ACTION_ITEM.DELETE) {
-            setLoading(true)
-            const body = { userId: item._id }
-            API.singleRequest(API.userDelete(body))
-                .then(response => {
-                    props.showAlert(response.data)
-                    _loadTransaction()
-                })
-                .catch(error => props.showAlert(error))
-                .finally(() => setLoading(false))
-        }
-    }
-
     return (
         <div className={classes.container}>
             <div className={classes.wrapList}>
@@ -83,15 +68,7 @@ export default function Transaction(props) {
                     className={classes.form}
                     onChange={(value) => setUserId(value)}
                 />
-                {dataTransaction.map((item, index) => {
-                    return (
-                        <ItemTransaction
-                            item={item}
-                            key={index}
-                            onPress={(item, action) => _handleAction(item, action)}
-                        />
-                    )
-                })}
+                <TableTransaction data={dataTransaction}/>
                 <Loader visible={loading} />
             </div>
             <div className={classes.wrapForm}>
