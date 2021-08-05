@@ -1,6 +1,7 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import {Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper} from '@material-ui/core';
+import { Convert } from '../../helpers/convert';
 
 const useStyles = makeStyles({
   table: {
@@ -18,6 +19,7 @@ export default function TableTransaction(props) {
         <TableHead>
           <TableRow>
             <TableCell>Kode Transaksi</TableCell>
+            <TableCell align="center">Jenis Transaksi</TableCell>
             <TableCell align="center">Total&nbsp;(Rp)</TableCell>
             <TableCell align="center">Tanggal</TableCell>
             <TableCell align="right">Keterangan</TableCell>
@@ -29,8 +31,9 @@ export default function TableTransaction(props) {
               <TableCell component="th" scope="row">
                 {row.transactionCode}
               </TableCell>
-              <TableCell align="center">{row.amount}</TableCell>
-              <TableCell align="center">{row.createdDate}</TableCell>
+              <TableCell align="center">{Convert.getTransactionType(row.transactionType)}</TableCell>
+              <TableCell align="center">{Convert.getFormatMoney(row.amount)}</TableCell>
+              <TableCell align="center">{Convert.dateTimeFormat(row.createdDate)}</TableCell>
               <TableCell align="right">{row.remark}</TableCell>
             </TableRow>
           ))}
