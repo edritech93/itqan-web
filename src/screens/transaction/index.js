@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Button } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { Loader, FormPicker } from '../../components';
+import { TYPE_TRANSACTION } from '../../constants';
 import { API } from '../../helpers/api';
 import TableTransaction from './table_transaction';
 import TransactionAdd from './transaction_add';
@@ -10,14 +11,10 @@ export default function Transaction(props) {
     const classes = useStyles();
     const [loading, setLoading] = useState(true);
     const [dataTransaction, setDataTransaction] = useState([]);
-    const [isShowAdd, setIsShowAdd] = useState(false);
-
     const [dataUser, setDataUser] = useState([]);
     const [userId, setUserId] = useState(null);
-
-    useEffect(() => {
-        _loadTransaction();
-    }, [])
+    const [selectType, setSelectType] = useState(TYPE_TRANSACTION[0].id);
+    const [isShowAdd, setIsShowAdd] = useState(false);
 
     useEffect(() => {
         function _loadUser() {
@@ -42,11 +39,11 @@ export default function Transaction(props) {
         if (userId) {
             _loadTransaction()
         }
-    }, [userId])
+    }, [userId, selectType])
 
     function _loadTransaction() {
         setLoading(true)
-        const body = {userId: userId}
+        const body = { userId: userId, transactionType: selectType }
         API.singleRequest(API.transactionGet(body))
             .then(response => setDataTransaction(response.data))
             .catch(error => props.showAlert(error))
@@ -61,19 +58,28 @@ export default function Transaction(props) {
     return (
         <div className={classes.container}>
             <div className={classes.wrapList}>
-                <FormPicker
-                    title={'User'}
-                    value={userId}
-                    data={dataUser}
-                    className={classes.form}
-                    onChange={(value) => setUserId(value)}
-                />
-                <TableTransaction data={dataTransaction}/>
+                <div className={classes.wrapPicker}>
+                    <FormPicker
+                        title={'User'}
+                        value={userId}
+                        data={dataUser}
+                        className={classes.formUser}
+                        onChange={(value) => setUserId(value)}
+                    />
+                    <FormPicker
+                        title={'Jenis Transaksi'}
+                        value={selectType}
+                        data={TYPE_TRANSACTION}
+                        className={classes.formTransactionType}
+                        onChange={(value) => setSelectType(value)}
+                    />
+                </div>
+                <TableTransaction data={dataTransaction} />
                 <Loader visible={loading} />
             </div>
             <div className={classes.wrapForm}>
                 {isShowAdd ? (
-                    <TransactionAdd onClose={() => _onCloseUserAdd()} showAlert={props.showAlert} />
+                    <TransactionAdd userId={userId} onClose={() => _onCloseUserAdd()} showAlert={props.showAlert} />
                 ) : (
                     <Button
                         variant={"contained"}
@@ -100,8 +106,18 @@ const useStyles = makeStyles({
         flexDirection: 'column',
         marginRight: 16,
     },
-    form: {
+    wrapPicker: {
+        display: 'flex',
+        width: '100%',
+        flexDirection: 'row',
         marginBottom: 16,
+    },
+    formUser: {
+        width: '100%',
+        marginRight: 16,
+    },
+    formTransactionType: {
+        width: '100%',
     },
     wrapForm: {
         height: '100%',
