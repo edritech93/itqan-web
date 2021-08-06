@@ -14,6 +14,7 @@ export default function Transaction(props) {
     const [dataUser, setDataUser] = useState([]);
     const [userId, setUserId] = useState(null);
     const [selectType, setSelectType] = useState(TYPE_TRANSACTION[0].id);
+    const [totalSaldo, setTotalSaldo] = useState(0);
     const [isShowAdd, setIsShowAdd] = useState(false);
 
     useEffect(() => {
@@ -44,8 +45,16 @@ export default function Transaction(props) {
     function _loadTransaction() {
         setLoading(true)
         const body = { userId: userId, transactionType: selectType }
-        API.singleRequest(API.transactionGet(body))
-            .then(response => setDataTransaction(response.data))
+        const bodyTotal = {userId: userId}
+        const apiCalls = [
+            API.transactionGet(body),
+            API.transactionTotalGetByUserId(bodyTotal)
+        ]
+        API.requestMultiple(apiCalls)
+            .then(response => {
+                setDataTransaction(response[0].data)
+                setTotalSaldo(response[1].data.totalAmount)
+            })
             .catch(error => props.showAlert(error))
             .finally(() => setLoading(false))
     }
@@ -70,9 +79,10 @@ export default function Transaction(props) {
                         title={'Jenis Transaksi'}
                         value={selectType}
                         data={TYPE_TRANSACTION}
-                        className={classes.formTransactionType}
+                        className={classes.formUser}
                         onChange={(value) => setSelectType(value)}
                     />
+                    <h1 className={classes.formUser}>{`Total Saldo: ${totalSaldo}`}</h1>
                 </div>
                 <TableTransaction data={dataTransaction} />
                 <Loader visible={loading} />
@@ -115,9 +125,6 @@ const useStyles = makeStyles({
     formUser: {
         width: '100%',
         marginRight: 16,
-    },
-    formTransactionType: {
-        width: '100%',
     },
     wrapForm: {
         height: '100%',

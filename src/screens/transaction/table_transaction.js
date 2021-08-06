@@ -26,15 +26,13 @@ export default function TableTransaction(props) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {data.map((row) => (
-            <TableRow key={row.name}>
-              <TableCell component="th" scope="row">
-                {row.transactionCode}
-              </TableCell>
-              <TableCell align="center">{Convert.getTransactionType(row.transactionType)}</TableCell>
-              <TableCell align="center">{Convert.getFormatMoney(row.amount)}</TableCell>
-              <TableCell align="center">{Convert.dateTimeFormat(row.createdDate)}</TableCell>
-              <TableCell align="right">{row.remark}</TableCell>
+          {data.map((item, index) => (
+            <TableRow key={index}>
+              <TableCell component="th" scope="row">{item.transactionCode}</TableCell>
+              <TableCell align="center">{Convert.getTransactionType(item.transactionType)}</TableCell>
+              <TableCell align="center">{Convert.getFormatMoney(item.amount)}</TableCell>
+              <TableCell align="center">{Convert.dateTimeFormat(item.createdDate)}</TableCell>
+              <TableCell align="right">{item.remark}</TableCell>
             </TableRow>
           ))}
         </TableBody>
