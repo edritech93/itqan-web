@@ -2,10 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { Button } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { Loader, FormPicker } from '../../components';
-import { TYPE_TRANSACTION } from '../../constants';
+import { ALL_DATA, TYPE_TRANSACTION } from '../../constants';
 import { API } from '../../helpers/api';
 import TableTransaction from './table_transaction';
 import TransactionAdd from './transaction_add';
+
+const FILTER_TYPE = [ALL_DATA, ...TYPE_TRANSACTION]
 
 export default function Transaction(props) {
     const classes = useStyles();
@@ -13,7 +15,7 @@ export default function Transaction(props) {
     const [dataTransaction, setDataTransaction] = useState([]);
     const [dataUser, setDataUser] = useState([]);
     const [userId, setUserId] = useState(null);
-    const [selectType, setSelectType] = useState(TYPE_TRANSACTION[0].id);
+    const [selectType, setSelectType] = useState(FILTER_TYPE[0].id);
     const [totalSaldo, setTotalSaldo] = useState(0);
     const [isShowAdd, setIsShowAdd] = useState(false);
 
@@ -78,7 +80,7 @@ export default function Transaction(props) {
                     <FormPicker
                         title={'Jenis Transaksi'}
                         value={selectType}
-                        data={TYPE_TRANSACTION}
+                        data={FILTER_TYPE}
                         className={classes.formUser}
                         onChange={(value) => setSelectType(value)}
                     />
