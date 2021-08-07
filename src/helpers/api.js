@@ -133,6 +133,14 @@ export class Api {
       data: args,
     });
   }
+
+  async transactionTotalGetByUserId(args) {
+    return this._request({
+      method: 'get',
+      url: 'v1/transaction/total/byUserId',
+      params: args
+    });
+  }
 }
 
 function _handleError(error) {
