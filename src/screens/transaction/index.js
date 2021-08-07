@@ -3,6 +3,7 @@ import { Button } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { Loader, FormPicker } from '../../components';
 import { ALL_DATA, TYPE_TRANSACTION } from '../../constants';
+import { Convert } from '../../helpers/convert';
 import { API } from '../../helpers/api';
 import TableTransaction from './table_transaction';
 import TransactionAdd from './transaction_add';
@@ -84,7 +85,7 @@ export default function Transaction(props) {
                         className={classes.formUser}
                         onChange={(value) => setSelectType(value)}
                     />
-                    <h1 className={classes.formUser}>{`Total Saldo: ${totalSaldo}`}</h1>
+                    <h1 className={classes.formUser}>{`Saldo: ${Convert.getFormatMoney(totalSaldo)}`}</h1>
                 </div>
                 <TableTransaction data={dataTransaction} />
                 <Loader visible={loading} />
