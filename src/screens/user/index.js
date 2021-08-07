@@ -4,7 +4,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { ACTION_ITEM } from '../../constants';
 import { Loader } from '../../components';
 import { API } from '../../helpers/api';
-import ItemUser from './item_user';
+import TableUser from './table_user';
 import UserAdd from './user_add';
 
 export default function User(props) {
@@ -52,15 +52,7 @@ export default function User(props) {
     return (
         <div className={classes.container}>
             <div className={classes.wrapList}>
-                {dataUser.map((item, index) => {
-                    return (
-                        <ItemUser
-                            item={item}
-                            key={index}
-                            onPress={(item, action) => _handleAction(item, action)}
-                        />
-                    )
-                })}
+                <TableUser data={dataUser} onPress={(item, action) => _handleAction(item, action)} />
                 <Loader visible={loading} />
             </div>
             <div className={classes.wrapForm}>
