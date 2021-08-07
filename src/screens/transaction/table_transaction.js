@@ -3,12 +3,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import {Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper} from '@material-ui/core';
 import { Convert } from '../../helpers/convert';
 
-const useStyles = makeStyles({
-  table: {
-    minWidth: 650,
-  },
-});
-
 export default function TableTransaction(props) {
   const classes = useStyles();
   const {data} = props;
@@ -40,3 +34,9 @@ export default function TableTransaction(props) {
     </TableContainer>
   );
 }
+
+const useStyles = makeStyles({
+  table: {
+    minWidth: 650,
+  },
+});

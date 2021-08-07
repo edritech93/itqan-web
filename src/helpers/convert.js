@@ -4,7 +4,7 @@ import moment from 'moment';
 
 export const Convert = {
     dateTimeFormat: date => {
-        return moment(date).format('DD MMM YYYY HH:mm');
+        return moment(date).utc(false).format('DD MMM YYYY HH:mm');
     },
     getFormatMoney: amount => {
         const formatter = new Intl.NumberFormat('id-ID');

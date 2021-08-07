@@ -13,3 +13,8 @@ export const TYPE_TRANSACTION = [
         text: 'Penarikan'
     },
 ]
+
+export const ALL_DATA = {
+    id: 999,
+    text: 'Semua'
+}
