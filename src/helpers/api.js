@@ -10,7 +10,7 @@ const CONTENT_TYPE = {
 
 export class Api {
   async _request(request) {
-    const baseUrl = 'http://localhost:8080/';
+    const baseUrl = 'https://itqanapi.balila.id/';
     let options = {
       url: request.url,
       method: request.method ? request.method : 'get', // default
