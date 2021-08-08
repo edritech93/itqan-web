@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Drawer, CssBaseline, AppBar, Toolbar, List, Typography, Divider, ListItem, ListItemText, ListItemIcon } from '@material-ui/core';
 import { PeopleAlt, MonetizationOn, Info, ExitToApp, Dashboard } from '@material-ui/icons';
+import { STORAGE } from '../actions/types';
 
 const drawerWidth = 240;
 
@@ -39,15 +40,24 @@ const DATA_MENU_DOWN = [
 export default function DrawerView(props) {
   const classes = useStyles();
   const { children } = props;
+  const [title, setTitle] = useState(DATA_MENU_UP[0].text);
 
   function _handleMenuUp(item) {
+    setTitle(item.text)
     props.history.push(item.push);
   }
 
   function _handleMenuDown(item) {
-    if (item.push)  {
+    if (item.push) {
+      if (item.push === '/') {
+        localStorage.removeItem(STORAGE.TOKEN)
+      }
       props.history.push(item.push);
     }
+  }
+
+  function _getTitle() {
+
   }
 
   return (
@@ -55,7 +65,7 @@ export default function DrawerView(props) {
       <CssBaseline />
       <AppBar position="fixed" className={classes.appBar}>
         <Toolbar>
-          <Typography variant="h6" noWrap>Itqan</Typography>
+          <Typography variant="h6" noWrap>{title}</Typography>
         </Toolbar>
       </AppBar>
       <Drawer
@@ -64,8 +74,7 @@ export default function DrawerView(props) {
         classes={{
           paper: classes.drawerPaper,
         }}
-        anchor="left"
-      >
+        anchor="left">
         <div className={classes.toolbar} />
         <Divider />
         <List>
