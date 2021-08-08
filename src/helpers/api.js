@@ -1,5 +1,6 @@
 'use strict';
 import axios from 'axios';
+import { ALERT_TYPE, BASE_URL } from '../constants';
 const CancelToken = axios.CancelToken;
 
 let terminateAPI = null;
@@ -10,7 +11,7 @@ const CONTENT_TYPE = {
 
 export class Api {
   async _request(request) {
-    const baseUrl = 'https://itqanapi.balila.id/';
+    const baseUrl = BASE_URL.DEV;
     let options = {
       url: request.url,
       method: request.method ? request.method : 'get', // default
@@ -162,6 +163,7 @@ function _handleError(error) {
 
   const dataMessage = {
     message: message,
+    type: ALERT_TYPE.ERROR,
     status: status,
   };
   return dataMessage;

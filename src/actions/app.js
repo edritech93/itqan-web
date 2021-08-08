@@ -1,8 +1,9 @@
-import {
-    ALERT
-} from './types';
+import {ALERT} from './types';
 
 export const showAlert = (args) => {
-    alert(args.message)
     return { type: ALERT.SHOW, args }
+}
+
+export const clearAlert = (args) => {
+    return { type: ALERT.CLEAR, args }
 }

@@ -1,19 +1,30 @@
 import { put, takeEvery, } from 'redux-saga/effects';
-import {ALERT} from '../actions/types';
+import { ALERT } from '../actions/types';
 
-export function* showAlert(action) {
-    const alert = action.alert;
-    yield put({ type: ALERT.SET, alert });
+async function _refreshToken() {
+    // TODO: refresh token here
+    // const token = await Helper.getRefreshToken();
+    // if (token) {
+    //     API.singleRequest(API.relogin())
+    //         .then(response => {
+    //             const dataLogin = response.data;
+    //             Helper.setToken(dataLogin.access_token);
+    //             Helper.setRefreshToken(dataLogin.refresh_token);
+    //         })
+    //         .catch(() => { })
+    //         .finally(() => NavigationService.resetRoot('Splash'));
+    // } else {
+    //     NavigationService.resetRoot('DashboardGuest');
+    // }
 }
 
-export function* alertWatcher() {
-    yield takeEvery(ALERT.SHOW, showAlert);
+export function* handleShowAlert(action) {
+    const { args } = action;
+    if (args.message === '401') {
+        _refreshToken();
+    }
 }
 
-export function* removeAlert(action) {
-    yield put({ type: ALERT.SET, alert: null });
-}
-
-export function* removeAlertWatcher() {
-    yield takeEvery(ALERT.CLEAR, removeAlert);
+export function* watchShowAlert() {
+    yield takeEvery(ALERT.SHOW, handleShowAlert);
 }
