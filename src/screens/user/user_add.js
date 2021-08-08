@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button, TextField, Card } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles';
 import { API } from '../../helpers/api';
@@ -16,8 +16,8 @@ const useStyles = makeStyles({
 });
 
 export default function UserAdd(props) {
-    const {detail} = props;
     const classes = useStyles();
+    const { detail } = props;
     const [fullName, setFullName] = useState(null);
     const [address, setAddress] = useState(null);
     const [phoneNumber, setPhoneNumber] = useState(null);
@@ -31,13 +31,23 @@ export default function UserAdd(props) {
     }, [detail])
 
     const handleAdd = () => {
-        const body ={fullName, address, phoneNumber}
-        API.singleRequest(API.userAdd(body))
-        .then(response => {
-            props.showAlert(response.data)
-            props.onClose()
-        })
-        .catch(error => props.showAlert(error))
+        if (detail) {
+            const body = { userId: detail._id, fullName, address, phoneNumber }
+            API.singleRequest(API.userEdit(body))
+                .then(response => {
+                    props.showAlert(response.data)
+                    props.onClose()
+                })
+                .catch(error => props.showAlert(error))
+        } else {
+            const body = { fullName, address, phoneNumber }
+            API.singleRequest(API.userAdd(body))
+                .then(response => {
+                    props.showAlert(response.data)
+                    props.onClose()
+                })
+                .catch(error => props.showAlert(error))
+        }
     }
 
     return (

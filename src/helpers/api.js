@@ -11,7 +11,7 @@ const CONTENT_TYPE = {
 
 export class Api {
   async _request(request) {
-    const baseUrl = BASE_URL.DEV;
+    const baseUrl = BASE_URL.LIVE;
     let options = {
       url: request.url,
       method: request.method ? request.method : 'get', // default
