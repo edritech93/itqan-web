@@ -13,7 +13,7 @@ export default function Login(props) {
   const handleLogin = () => {
     if (username === 'admin' && password === '123qwe') {
       localStorage.setItem(STORAGE.TOKEN, '123qwe')
-      props.history.push('/home');
+      props.history.push('/dashboard');
     } else {
       props.showAlert({
         message: 'username atau password salah',

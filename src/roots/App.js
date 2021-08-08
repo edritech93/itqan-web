@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { BrowserRouter } from 'react-router-dom';
-import { clearAlert} from '../actions/app';
+import { clearAlert } from '../actions/app';
 import { AlertView } from '../components';
 import { Provider } from 'react-redux';
 import storeConfig from '../helpers/store-config';
@@ -19,14 +19,14 @@ export default function App(props) {
   }, [])
 
   const _listenAlert = () => {
-    const {dataAlert} = store.getState().app;
-    if (dataAlert != prevDataAlert)  {
+    const { dataAlert } = store.getState().app;
+    if (dataAlert != prevDataAlert) {
       prevDataAlert = dataAlert;
       setObjAlert(dataAlert);
       clearTimeout(timeoutDataAlert)
       timeoutDataAlert = setTimeout(() => {
         store.dispatch(clearAlert())
-      }, 15000);
+      }, 5000);
     }
   }
 
