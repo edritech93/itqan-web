@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Button, TextField, Card } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles';
-import { TYPE_TRANSACTION } from '../../constants';
+import { ALERT_TYPE, TYPE_TRANSACTION } from '../../constants';
 import { FormPicker } from '../../components';
 import { API } from '../../helpers/api';
 
@@ -25,13 +25,16 @@ export default function TransactionAdd(props) {
             }
             API.singleRequest(API.transactionAdd(body))
                 .then(response => {
-                    alert(response.data.message)
+                    props.showAlert(response.data)
                     props.onClose()
                 })
                 .catch(error => props.showAlert(error))
                 .finally(() => setLoading(false))
         } else {
-            alert('Isi data dengan benar')
+            props.showAlert({
+                message: 'Isi data dengan benar',
+                type: ALERT_TYPE.ERROR
+            })
         }
     }
 

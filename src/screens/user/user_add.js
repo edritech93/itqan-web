@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 import { Button, TextField, Card } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles';
 import { API } from '../../helpers/api';
+import { ALERT_TYPE } from '../../constants';
 
 const useStyles = makeStyles({
     form: {
@@ -33,10 +34,10 @@ export default function UserAdd(props) {
         const body ={fullName, address, phoneNumber}
         API.singleRequest(API.userAdd(body))
         .then(response => {
-            alert(response.data.message)
+            props.showAlert(response.data)
             props.onClose()
         })
-        .catch(error => {})
+        .catch(error => props.showAlert(error))
     }
 
     return (

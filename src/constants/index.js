@@ -1,3 +1,8 @@
+export const BASE_URL = {
+    DEV: 'http://localhost:8086/',
+    LIVE: 'https://itqanapi.balila.id/'
+}
+
 export const ACTION_ITEM = {
     EDIT: 'EDIT',
     DELETE: 'DELETE',
@@ -17,4 +22,11 @@ export const TYPE_TRANSACTION = [
 export const ALL_DATA = {
     id: 999,
     text: 'Semua'
+}
+
+export const ALERT_TYPE = {
+    ERROR: 'error',
+    WARNING: 'warning',
+    INFO: 'info',
+    SUCCESS: 'success'
 }

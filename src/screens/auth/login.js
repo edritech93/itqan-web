@@ -3,12 +3,7 @@ import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Button, TextField, Card } from '@material-ui/core';
 import { STORAGE } from '../../actions/types';
-
-const useStyles = makeStyles({
-  form: {
-    marginBottom: 16,
-  }
-});
+import { ALERT_TYPE } from '../../constants';
 
 export default function Login(props) {
   const classes = useStyles();
@@ -20,7 +15,10 @@ export default function Login(props) {
       localStorage.setItem(STORAGE.TOKEN, '123qwe')
       props.history.push('/home');
     } else {
-      alert('salah username atau password')
+      props.showAlert({
+        message: 'username atau password salah',
+        type: ALERT_TYPE.ERROR
+      });
     }
   }
 
@@ -51,3 +49,9 @@ export default function Login(props) {
     </div>
   );
 }
+
+const useStyles = makeStyles({
+  form: {
+    marginBottom: 16,
+  }
+});

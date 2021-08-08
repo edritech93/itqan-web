@@ -1,13 +1,8 @@
 import { fork } from 'redux-saga/effects';
-
-import {
-    alertWatcher,
-    removeAlertWatcher,
-} from './app';
+import {watchShowAlert} from './app';
 
 export default function* rootSaga() {
     yield [
-        yield fork(alertWatcher),
-        yield fork(removeAlertWatcher),
+        yield fork(watchShowAlert),
     ]
 }

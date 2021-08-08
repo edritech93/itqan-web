@@ -57,7 +57,7 @@ export default function User(props) {
             </div>
             <div className={classes.wrapForm}>
                 {isShowAdd ? (
-                    <UserAdd detail={userDetail} onClose={() => _onCloseUserAdd()} />
+                    <UserAdd detail={userDetail} onClose={() => _onCloseUserAdd()} showAlert={props.showAlert} />
                 ) : (
                     <Button
                         variant={"contained"}
