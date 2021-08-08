@@ -1,39 +1,55 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Drawer, CssBaseline, AppBar, Toolbar, List, Typography, Divider, ListItem, ListItemText, ListItemIcon } from '@material-ui/core';
-import { PeopleAlt, MonetizationOn, Info, ExitToApp } from '@material-ui/icons';
+import { PeopleAlt, MonetizationOn, Info, ExitToApp, Dashboard } from '@material-ui/icons';
 
 const drawerWidth = 240;
 
 const DATA_MENU_UP = [
   {
-    id: 0,
-    text: 'Nasabah',
-    icon: <PeopleAlt />
+    text: 'Beranda',
+    icon: <Dashboard />,
+    push: '/dashboard'
   },
   {
-    id: 1,
+    text: 'Nasabah',
+    icon: <PeopleAlt />,
+    push: '/user'
+  },
+  {
     text: 'Transaksi',
-    icon: <MonetizationOn />
+    icon: <MonetizationOn />,
+    push: '/transaction'
   },
 ]
 
 const DATA_MENU_DOWN = [
   {
-    id: 0,
     text: 'Tentang',
-    icon: <Info />
+    icon: <Info />,
+    push: null
   },
   {
-    id: 1,
     text: 'Logout',
-    icon: <ExitToApp />
+    icon: <ExitToApp />,
+    push: '/'
   },
 ]
 
 export default function DrawerView(props) {
   const classes = useStyles();
   const { children } = props;
+
+  function _handleMenuUp(item) {
+    props.history.push(item.push);
+  }
+
+  function _handleMenuDown(item) {
+    if (item.push)  {
+      props.history.push(item.push);
+    }
+  }
+
   return (
     <div className={classes.root}>
       <CssBaseline />
@@ -54,7 +70,7 @@ export default function DrawerView(props) {
         <Divider />
         <List>
           {DATA_MENU_UP.map((item, index) => (
-            <ListItem button key={index}>
+            <ListItem button key={index} onClick={() => _handleMenuUp(item)}>
               <ListItemIcon>{item.icon}</ListItemIcon>
               <ListItemText primary={item.text} />
             </ListItem>
@@ -63,7 +79,7 @@ export default function DrawerView(props) {
         <Divider />
         <List>
           {DATA_MENU_DOWN.map((item, index) => (
-            <ListItem button key={index}>
+            <ListItem button key={index} onClick={() => _handleMenuDown(item)}>
               <ListItemIcon>{item.icon}</ListItemIcon>
               <ListItemText primary={item.text} />
             </ListItem>

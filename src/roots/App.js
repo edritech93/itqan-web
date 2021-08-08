@@ -26,7 +26,7 @@ export default function App(props) {
       clearTimeout(timeoutDataAlert)
       timeoutDataAlert = setTimeout(() => {
         store.dispatch(clearAlert())
-      }, 15000);
+      }, 5000);
     }
   }
 
