@@ -1,6 +1,6 @@
 export const BASE_URL = {
     DEV: 'http://localhost:8086/',
-    LIVE: 'https://itqanapi.balila.id/'
+    LIVE: 'http://localhost:8086/'
 }
 
 export const ACTION_ITEM = {
